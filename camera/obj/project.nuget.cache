@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "e10THYDVvhxrA4Z6Jwpbcdt36wiIBlXyt3cNbFN0xPFzCWHJWpkpJqwd8mR+zgOPzk2nkgBfSwIs6w2Ud+nZ9w==",
+  "dgSpecHash": "+GKKYx/BpVbHwg++ESwiOpD+G294+zZZmHPbYWH2Zy4NavhSBiTGxV14bA/aBLqE6tmiBitZk8pXWKCHW/M0TQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\cerea\\Documents\\School\\hackathon\\project\\camera\\camera.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cerea\\.nuget\\packages\\azure.core\\1.22.0\\azure.core.1.22.0.nupkg.sha512",
     "C:\\Users\\cerea\\.nuget\\packages\\azure.storage.blobs\\12.11.0\\azure.storage.blobs.12.11.0.nupkg.sha512",
     "C:\\Users\\cerea\\.nuget\\packages\\azure.storage.common\\12.10.0\\azure.storage.common.12.10.0.nupkg.sha512",
+    "C:\\Users\\cerea\\.nuget\\packages\\commandlineparser\\2.8.0\\commandlineparser.2.8.0.nupkg.sha512",
     "C:\\Users\\cerea\\.nuget\\packages\\dotnetty.buffers\\0.7.0\\dotnetty.buffers.0.7.0.nupkg.sha512",
     "C:\\Users\\cerea\\.nuget\\packages\\dotnetty.codecs\\0.7.0\\dotnetty.codecs.0.7.0.nupkg.sha512",
     "C:\\Users\\cerea\\.nuget\\packages\\dotnetty.codecs.mqtt\\0.7.0\\dotnetty.codecs.mqtt.0.7.0.nupkg.sha512",
