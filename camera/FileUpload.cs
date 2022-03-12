@@ -20,10 +20,8 @@ namespace Microsoft.Azure.Devices.Client.Samples
             _deviceClient = deviceClient;
         }
 
-        public async Task RunSampleAsync()
+        public async Task RunSampleAsync(string filePath)
         {
-            const string filePath = "test.jpg";
-
             using var fileStreamSource = new FileStream(filePath, FileMode.Open);
             var fileName = Path.GetFileName(fileStreamSource.Name);
 

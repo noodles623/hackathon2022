@@ -24,8 +24,13 @@ namespace Microsoft.Azure.Devices.Client.Samples
                 parameters.PrimaryConnectionString,
                 parameters.TransportType);
             
+            // Parse Camera ID
+            var folder = parameters.CameraID;
+            Console.WriteLine(folder);
+
+            // Upload photo to cloud storge
             var sample = new FileUpload(deviceClient);
-            await sample.RunSampleAsync();
+            await sample.RunSampleAsync(folder + "/test.jpg");
 
             await deviceClient.CloseAsync();
 

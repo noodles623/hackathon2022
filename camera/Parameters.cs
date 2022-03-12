@@ -21,5 +21,12 @@ namespace Microsoft.Azure.Devices.Client.Samples
             Required = false,
             HelpText = "The transport to use to communicate with the IoT Hub. Possible values include Mqtt, Mqtt_WebSocket_Only, Mqtt_Tcp_Only, Amqp, Amqp_WebSocket_Only, Amqp_Tcp_only, and Http1.")]
         public TransportType TransportType { get; set; }
+        [Option(
+            'c',
+            "Camera No.",
+            Required = true,
+            HelpText = "Camera ID"
+        )]
+        public string? CameraID { get; set; }
     }
 }
