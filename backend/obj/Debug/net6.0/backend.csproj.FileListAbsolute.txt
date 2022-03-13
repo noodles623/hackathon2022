@@ -22,3 +22,8 @@ C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\refin
 C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\backend.pdb
 C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\backend.genruntimeconfig.cache
 C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\ref\backend.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Microsoft.Rest.ClientRuntime.Azure.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Azure.Storage.Common.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\System.IO.Hashing.dll
