@@ -1,0 +1,5 @@
+Camera 1:
+& 'C:\Program Files\dotnet\dotnet.exe' run --p 'HostName=camerahub.azure-devices.net;DeviceId=camera_1;SharedAccessKey=ctIVFWM+PE+tgoTcTtF8k+Uc9kDRObeaS3xj4J3xuuw=' --c 'camera1
+
+Camera 2:
+ & 'C:\Program Files\dotnet\dotnet.exe' run --p "HostName=camerahub.azure-devices.net;DeviceId=camera_2;SharedAccessKey=UVUTGMkCL5Vg2QOgygtr3CaWF3XVfESeeNWn7Uigz0M=" --c 'camera2

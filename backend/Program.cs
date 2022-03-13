@@ -139,7 +139,7 @@ class Program
         if (farm.cameras != null)
             farm.cameras[id].feed = not.BlobUri;
 
-        string downloadFilePath = "id" + ".jpg";
+        string downloadFilePath = id + ".jpg";
         blobClient.DownloadTo(downloadFilePath);
         var img = new MemoryStream(File.ReadAllBytes(downloadFilePath));
 
