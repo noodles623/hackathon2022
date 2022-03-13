@@ -1,0 +1,19 @@
+{
+    "cameras" : {
+        "camera_1" : {
+            "feed" : "https://files.catbox.moe/41ur6d.jpg",
+            "stalls" : [
+                true,
+                false,
+                false
+            ]
+        },
+        "camera_2" : {
+            "feed" : "https://files.catbox.moe/qp6o6v.jpg",
+            "stalls" : [
+                false, 
+                true, 
+                true
+            ]
+        }
+}
