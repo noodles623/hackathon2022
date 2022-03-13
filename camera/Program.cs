@@ -23,19 +23,29 @@ namespace Microsoft.Azure.Devices.Client.Samples
             using var deviceClient = DeviceClient.CreateFromConnectionString(
                 parameters.PrimaryConnectionString,
                 parameters.TransportType);
-            
+
             // Parse Camera ID
             var folder = parameters.CameraID;
             Console.WriteLine(folder);
 
             // Upload photo to cloud storge
             var sample = new FileUpload(deviceClient);
-            await sample.RunSampleAsync(folder + "/test.jpg");
 
+            while (true)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine("Sending image: " + folder + "/img_" + (i + 1).ToString() + ".jpg");
+                    await sample.RunSampleAsync(folder + "/img_" + (i + 1).ToString() + ".jpg");
+                    System.Threading.Thread.Sleep(10_000);
+                }
+            }
+/*
             await deviceClient.CloseAsync();
 
             Console.WriteLine("Done.");
             return 0;
+*/
         }
 
     }

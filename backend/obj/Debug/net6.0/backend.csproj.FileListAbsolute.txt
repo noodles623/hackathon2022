@@ -27,3 +27,12 @@ C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Micro
 C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Azure.Storage.Blobs.dll
 C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Azure.Storage.Common.dll
 C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\System.IO.Hashing.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Microsoft.AspNetCore.Server.Kestrel.Https.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\bin\Debug\net6.0\Microsoft.Extensions.Hosting.dll
+C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\backend.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\cerea\Documents\School\hackathon\project\backend\obj\Debug\net6.0\scopedcss\bundle\backend.styles.css

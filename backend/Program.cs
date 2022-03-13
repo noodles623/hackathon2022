@@ -6,6 +6,23 @@ using Azure.Storage.Blobs.Models;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+
+public class Camera
+{
+    public string? feed { get; set; }
+    public Boolean[]? stalls { get; set; }
+}
+
+public class Farm
+{
+    public Dictionary<string, Camera>? cameras { get; set; }
+}
 
 class Program
 {
@@ -20,14 +37,43 @@ class Program
     // 2d array representing cow stalls. 1st dimension is camera_id, 
     // 2nd dimension is corresponding stalls. In this case, we have two
     // Cameras, with 3 stalls each.
-    static Boolean[,] stalls = new Boolean[2, 3];
+    public static Farm farm = new Farm
+    {
+        cameras = new Dictionary<string, Camera>
+        {
+            ["camera_1"] = new Camera
+            {
+                feed = "",
+                stalls = new Boolean[] { false, false, false }
+            },
+            ["camera_2"] = new Camera
+            {
+                feed = "",
+                stalls = new Boolean[] { false, false, false }
+            }
+        }
+    };
 
     [Obsolete]
-    public static void Main()
+    public static void Main(string[] args)
     {
+        var builder = WebApplication.CreateBuilder(args);
+        var app = builder.Build();
+
+        ReceiveFileUploadNotificationAsync();
+
+        app.MapGet("/", () =>
+        {
+            string jsonString = JsonSerializer.Serialize(farm);
+            return jsonString;
+        });
+
+        app.Run();
+
         Console.WriteLine("Receive file upload notifications\n");
 
         ReceiveFileUploadNotificationAsync();
+
         Console.WriteLine("Press Enter to exit\n");
         Console.ReadLine();
     }
@@ -50,14 +96,28 @@ class Program
         Console.WriteLine("\nReceiving file upload notification from service");
         while (true)
         {
-            var fileUploadNotification = await notificationReceiver.ReceiveAsync();
-            if (fileUploadNotification == null) continue;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Received file upload notification: {0}",
-              string.Join(", ", fileUploadNotification.BlobName));
-            HandleFileUpload("TODO", fileUploadNotification.BlobName, predictionApi, containerClient);
-            Console.ResetColor();
-            await notificationReceiver.CompleteAsync(fileUploadNotification);
+            try
+            {
+                var fileUploadNotification = await notificationReceiver.ReceiveAsync();
+                if (fileUploadNotification == null) continue;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Received file upload notification: {0}",
+                  string.Join(", ", fileUploadNotification.BlobName));
+                HandleFileUpload(
+                    fileUploadNotification.DeviceId,
+                    fileUploadNotification,
+                    predictionApi, containerClient
+                );
+                string jsonString = JsonSerializer.Serialize(farm);
+                Console.WriteLine(jsonString);
+
+                Console.ResetColor();
+                await notificationReceiver.CompleteAsync(fileUploadNotification);
+            }
+            catch (System.Threading.Tasks.TaskCanceledException e)
+            {
+                continue;
+            }
         }
     }
     private static CustomVisionPredictionClient AuthenticatePrediction(string endpoint, string predictionKey)
@@ -70,14 +130,17 @@ class Program
         return predictionApi;
     }
 
-    private static async void HandleFileUpload(string id, string uri, CustomVisionPredictionClient predictionApi, BlobContainerClient containerClient)
+    private static void HandleFileUpload(string id, FileNotification not, CustomVisionPredictionClient predictionApi, BlobContainerClient containerClient)
     {
-        BlobClient blobClient = containerClient.GetBlobClient(uri);
-        //var img = new MemoryStream();
-        //blobClient.DownloadTo(img);
+        BlobClient blobClient = containerClient.GetBlobClient(not.BlobName);
 
-        string downloadFilePath = "test_download.jpg";
-        await blobClient.DownloadToAsync(downloadFilePath);
+        Console.WriteLine(id);
+
+        if (farm.cameras != null)
+            farm.cameras[id].feed = not.BlobUri;
+
+        string downloadFilePath = "id" + ".jpg";
+        blobClient.DownloadTo(downloadFilePath);
         var img = new MemoryStream(File.ReadAllBytes(downloadFilePath));
 
         Console.WriteLine("Making a prediction:");
@@ -85,19 +148,43 @@ class Program
         {
             var result = predictionApi.DetectImage(projectID, publishedName, img);
             // Loop over each prediction and write out the results
-            foreach (var c in result.Predictions)
-            {
-                if (c.Probability > .9)
-                {
-                    Console.WriteLine($"\t{c.TagName}: {c.Probability:P1}");
-                    Console.WriteLine($"\t{c.TagName}: {c.BoundingBox.Left}, {c.BoundingBox.Top}\n");
-                }
-            }
+            updateStalls(id, result);
         }
         catch (Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models.CustomVisionErrorException ex)
         {
             Console.WriteLine(ex.Request.Content);
             Console.WriteLine(ex.Response.Content);
+        }
+    }
+
+    private static void updateStalls(string cameraID, ImagePrediction predictions)
+    {
+        Camera camera;
+        Boolean[] stalls = new Boolean[] { };
+        if (farm.cameras != null)
+        {
+            camera = farm.cameras[cameraID];
+            if (camera.stalls != null)
+                stalls = camera.stalls;
+        }
+        for (int i = 0; i < 3; i++)
+            stalls[i] = false;
+        foreach (var c in predictions.Predictions)
+        {
+            if (c.Probability < .9)
+                continue;
+            if (c.BoundingBox.Left < .33)
+            {
+                stalls[0] = true;
+            }
+            else if (c.BoundingBox.Left > .66)
+            {
+                stalls[2] = true;
+            }
+            else
+            {
+                stalls[1] = true;
+            }
         }
     }
 }
